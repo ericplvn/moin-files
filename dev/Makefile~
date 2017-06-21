@@ -1,0 +1,23 @@
+all:
+	docker build -t moin .
+
+all-no-cache:
+	docker build --no-cache -t moin .
+
+run:
+	docker run -ti --rm \
+		-p 9112:9000 \
+		-e WIKIUID=1000 \
+		-e WIKIGID=999 \
+		-v /media/sf_WinShare/wiki-dev/:/srv/wiki \
+		moin
+
+run-bash:
+	docker run -ti --rm \
+		-p 9112:9000 \
+		-e WIKIUID=1000 \
+		-e WIKIGID=999 \
+		-v /media/sf_WinShare/wiki-dev/:/srv/wiki \
+		--entrypoint="/bin/bash" \
+		moin
+
