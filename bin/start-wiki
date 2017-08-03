@@ -1,0 +1,10 @@
+#!/bin/bash
+     
+docker run -d \
+   --name=wiki \
+   --restart=unless-stopped \
+   -p 9111:9000 \
+   -e WIKIUID=1000 \
+   -e WIKIGID=1000 \
+   -v /srv/wiki/:/srv/wiki \
+   moin
