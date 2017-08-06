@@ -1,12 +1,23 @@
-!#/bin/bash
+#!/bin/bash
 
 set -e
 
-BACKUP_NAME="/home/ericplvn/Documents/backups/linode-backup-`date +%Y%m%d_%H%M%S`.tar.gz"
+if [ -z "$1" ]; then
+   FILE_PERIOD=""
+   FOLDER_PERIOD=""
+elif [ "$1" == "daily" ] || [ "$1" == "monthly" ]; then
+   FILE_PERIOD="$1-"
+   FOLDER_PERIOD="$1/"
+else
+    echo "invalid argument, must be 'daily' or 'monthly'"
+    exit
+fi
 
-TO_BACKUP="/srv/wiki /srv/nginx /home/ericplvn/Documents/code/moin-files"
+BACKUP_NAME="/home/ericplvn/Documents/backups/linode-backup-$FILE_PERIOD`date +%Y%m%d_%H%M%S`.tar.gz"
 
-TARGET_DIR=ericplvn@themountain.no-ip.org:~/Documents/linode/
+TO_BACKUP="/srv/wiki /srv/nginx"
+
+TARGET_DIR="ericplvn@themountain.no-ip.org:~/Documents/linode/$FOLDER_PERIOD"
 
 tar -czvf $BACKUP_NAME $TO_BACKUP
 
