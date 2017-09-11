@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
+fi
+
+service nginx stop $$ killall -9 nginx
+nginx -c /srv/nginx/conf/nginx.conf
